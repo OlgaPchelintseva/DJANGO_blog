@@ -7,7 +7,7 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')  #auto_now_add - фиксирует один раз дату при создании, при обновлении записи значение не обновляется
     update_at = models.DateTimeField(auto_now=True, verbose_name='Дата обновления') #auto_now - фиксирует дату каждый раз при обновлении записи
     
-    author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Автор', related_name='posts', null=True, blanck=True) # может быть пустым # user.posts.all() # может быть null
+    author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Автор', related_name='posts', null=True, blank=True) # может быть пустым # user.posts.all() # может быть null
 
     def __str__(self):
         return self.title 
