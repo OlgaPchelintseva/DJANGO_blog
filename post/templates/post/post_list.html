@@ -10,6 +10,7 @@
                     <a href="{% url 'post:post_detail' post.id %}">{{ post.title }}</a> <!-- передается значение id объекта -->
                 </h2>
                 <div>
+                    {{ post.author.username }}
                     {{ post.created_at|date:"d.m.Y H:i" }}
                 </div>
                 <div>
