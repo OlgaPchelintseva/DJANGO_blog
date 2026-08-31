@@ -11,6 +11,16 @@
             <a href="{% url 'post:post_list' %}">Мой блог</a>
         </h1>
         <nav>
+            {% if user.is_authenticated %}
+                <span>{{ user.username }}</span>
+                <a href="{% url 'post:create_post' %}">Создать пост</a>
+                <form action="{% url 'logout' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">Выйти</button>
+                </form>                
+            {% else %}
+                <a href="{% url 'login' %}">Войти</a>
+            {% endif %}
             <a href="/admin/" target="_blank">Админка</a>
         </nav>
     </header>
