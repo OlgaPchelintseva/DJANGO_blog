@@ -4,3 +4,4 @@ venv
 .vscode/
 *.py[cod]
 .ven
+db.sqlite3
