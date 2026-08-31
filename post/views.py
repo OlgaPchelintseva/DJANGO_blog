@@ -28,7 +28,7 @@ def post_detail(request, post_id):
             comment.author = request.user
             comment.save()
             messages.success(request, 'Комментарий добавлен')
-            return redirect('post:post_details', post_id = post.id)
+            return redirect('post:post_detail', post_id = post.id)
         else:
             messages.error(request, 'Ошибка при добавлении комментария')
     else:
