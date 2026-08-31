@@ -22,7 +22,7 @@ class PostCreateForm(forms.ModelForm):
 
 class CommentForm(forms.ModelForm):
     class Meta:
-        model: Comment
+        model= Comment
         fields = ['text']
         widgets = {
             'text': forms.Textarea(attrs={
