@@ -12,12 +12,12 @@ class BlockCheckMiddleware:
         if request.user.is_authenticated:
             profile = getattr(request.user, 'profile', None)
             if profile and profile.is_curently_blocked():
-                if profile.blocked_untill:
-                    date_str = profile.blocked_untill.strftime('%d.%m.%Y %H:%i')
+                if profile.blocked_until:
+                    date_str = profile.blocked_until.strftime('%d.%m.%Y %H:%M')
                     messages.error(request, f'Ваш аккаунт заблокирован до {date_str}')
                 else:
                     messages.error(request, f'Ваш аккаунт заблокирован навсегда')
                 logout(request)
                 return redirect('login')
-            return self.get_response(request)
+        return self.get_response(request)
                 
