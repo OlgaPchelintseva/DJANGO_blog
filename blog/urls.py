@@ -17,11 +17,17 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('post.urls')),
     path('register/', include('userAcc.urls')),
+    path('profile/', include('userProfile.urls')),
     path('login/', auth_views.LoginView.as_view(template_name='registration/login.html'), name='login'), # as_view - используется для предсталений-классов
     path('logout/', auth_views.LogoutView.as_view(next_page='post:post_list'), name='logout'), 
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
