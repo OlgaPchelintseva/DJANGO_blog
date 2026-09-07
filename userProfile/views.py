@@ -44,7 +44,7 @@ def profile_edit(request):
 def user_profile_view(request, user_id):
     if not (hasattr(request.user, 'profile') and request.user.is_moderator):
         raise PermissionDenied('Только модераторы имеют доступ')
-    user = get_object_or_404(User, pk = user_id)
+    user = get_object_or_404(User, pk=user_id)
     profile = get_object_or_404(Profile, user=user)
 
     context = {

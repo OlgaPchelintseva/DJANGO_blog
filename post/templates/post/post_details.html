@@ -15,9 +15,13 @@
         <div>
             {{ post.content }}
         </div>
-        {% if user.is_authenticated and (post.can_edit or post.can_delete) %}
-            <a href="{% url 'post:edit_post' post.id %}">Редактировать</a>
-            <a href="{% url 'post:delete_post' post.id %}">Удалить</a>
+        {% if user.is_authenticated %}
+            {% if post.can_edit %}
+                <a href="{% url 'post:edit_post' post.id %}">Редактировать</a>
+            {% endif %}
+            {% if post.can_delete %}
+                a href="{% url 'post:delete_post' post.id %}">Удалить</a>
+            {% endif %}
         {% endif %}
 
         {% if delete_confirm %}
