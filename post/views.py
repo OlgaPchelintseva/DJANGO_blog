@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Post, Comment
 from .forms import PostCreateForm, CommentForm
+from django.core.exceptions import PermissionDenied
 
 def post_list(request):
     posts = Post.objects.all().order_by('-created_at')
@@ -23,7 +24,7 @@ def post_detail(request, post_id):
         
         form = CommentForm(request.POST)
         if form.is_valid():
-            comment = form.save(commit=False) # commit сщхраняет данные в БД, если поставить False, то не сохранит
+            comment = form.save(commit=False) # commit сoхраняет данные в БД, если поставить False, то не сохранит
             comment.post = post
             comment.author = request.user
             comment.save()
@@ -66,6 +67,11 @@ def create_post(request):
 @login_required
 def edit_post(request, post_id):
     post = get_object_or_404(Post, pk=post_id, author=request.user)
+
+    if not post.can_edit(request.user):
+        messages.error(request, 'Нет прав для редактирования')
+        return redirect('post:post_detail', post_id=post.id)
+    
     if request.method == 'POST':
         form = PostCreateForm(request.POST, instance=post) #instance - отвечает за передачу значений свойств объекта
         if form.is_valid():
@@ -87,6 +93,10 @@ def edit_post(request, post_id):
 @login_required
 def delete_post(request, post_id):
     post = get_object_or_404(Post, pk=post_id, author=request.user)
+
+    if not post.can_delete(request.user):
+        raise PermissionDenied('У вас нет прав на удаление')
+
     if request.method == 'POST':
         if 'confirm_delete' in request.POST:
             post.delete()
@@ -105,3 +115,22 @@ def delete_post(request, post_id):
         'page_title': f'Удаление {post.title}'
     }
     return render(request, 'post/post_details.html', context)
+
+@login_required
+def delete_comment(request, comment_id):
+    comment = get_object_or_404(Comment, pk=comment_id)
+    if not comment.can_delete(request.user):
+        raise PermissionDenied('Нет прав на удаление')
+    post_id = comment.post.id
+    if request.method == 'POST':
+        if 'confirm_delete_comment' in request.POST:
+            comment.delete()
+            messages.success(request, 'Комментарий успешно удален')
+        return redirect('post:post_detail', post_id = post_id)
+    
+    context = {
+        'comment': comment,
+        'page_title': 'Удаление комментария'
+    }
+    return render(request, 'post/comment_delete.html', context)
+    
