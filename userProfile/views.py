@@ -42,7 +42,7 @@ def profile_edit(request):
 
 @login_required
 def user_profile_view(request, user_id):
-    if not (hasattr(request.user, 'profile') and request.user.is_moderator):
+    if not (hasattr(request.user, 'profile') and request.user.profile.is_moderator):
         raise PermissionDenied('Только модераторы имеют доступ')
     user = get_object_or_404(User, pk=user_id)
     profile = get_object_or_404(Profile, user=user)
@@ -57,7 +57,7 @@ def user_profile_view(request, user_id):
 
 @login_required
 def toggle_block_user(request, user_id):
-    if not (hasattr(request.user, 'profile') and request.user.is_moderator):
+    if not (hasattr(request.user, 'profile') and request.user.profile.is_moderator):
         raise PermissionDenied('Только модераторы имеют доступ')
     
     if request.user.id == user_id:
@@ -74,7 +74,7 @@ def toggle_block_user(request, user_id):
 
         if action == 'block':
             profile.is_blocked = True
-            if days and days.is_digit():
+            if days and days.isdigit():
                 days_int = int(days)
                 if days_int > 0:
                     profile.blocked_untill = timezone.now() + timezone.timedelta(days=days_int)

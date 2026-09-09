@@ -16,11 +16,11 @@
             {{ post.content }}
         </div>
         {% if user.is_authenticated %}
-            {% if post.can_edit %}
+            {% if post.author == user or user.profile.is_moderator %}
                 <a href="{% url 'post:edit_post' post.id %}">Редактировать</a>
             {% endif %}
-            {% if post.can_delete %}
-                a href="{% url 'post:delete_post' post.id %}">Удалить</a>
+            {% if post.author == user or user.profile.is_moderator %}
+                <a href="{% url 'post:delete_post' post.id %}">Удалить</a>
             {% endif %}
         {% endif %}
 
@@ -49,7 +49,7 @@
             {% if comments %}
                 {% for comment in comments %}
                     {{ comment.created_at }} {{ comment.author }}
-                    {% if user.is_authenticated and comment.can_delete %} 
+                    {% if comment.author == user or user.profile.is_moderator or post.author == user %} 
                         <a href="{% url 'post:delete_comment' comment_id %}">Удалить комментарий</a>
                     {% endif %}
                     <p>{{ comment.text }}</p>
