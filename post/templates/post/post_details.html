@@ -32,11 +32,7 @@
         {% endif %}
     </article>
     <section>
-<<<<<<< HEAD
-        <h2>Комментарии ({% comments.count %})</h2>
-=======
         <h2>Комментарии ({{ comments.count }})</h2>
->>>>>>> 4e14037589a12440effb762e2f959f02968e76dd
         {% if user.is_authenticated %}
             <h3>Добавить комментарий</h3>
             <form method="post">
