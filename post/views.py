@@ -115,7 +115,6 @@ def delete_post(request, post_id):
         'page_title': f'Удаление {post.title}'
     }
     return render(request, 'post/post_details.html', context)
-
 @login_required
 def delete_comment(request, comment_id):
     comment = get_object_or_404(Comment, pk=comment_id)
@@ -133,4 +132,3 @@ def delete_comment(request, comment_id):
         'page_title': 'Удаление комментария'
     }
     return render(request, 'post/comment_delete.html', context)
-    
