@@ -1,0 +1,31 @@
+{% extends 'post/base.html' %}
+{% block title %} {{ page_title }} {% endblock %}
+
+{% block content %}
+    <div>
+        <div>
+            {% if profile.avatar %}
+                <img src="{{profile.avatar.url}}">
+            {% else %}
+                <div>🐱</div>
+            {% endif %}
+        </div>
+        <h1>{{ user.username }}</h1>
+        <p>{{ user.email }}</p>
+        {% if profile.is_moderator %}
+            <div>💻Модератор</div>
+        {% endif %}
+        <div>
+            {% if profile.bio %}
+                <div>{{ profile.bio }}</div>
+            {% else %}
+                <p>Расскажите о себе...</p>
+            {% endif %}
+        </div>
+        <div>
+            <div>{{ user.posts.count }} Постов</div>
+            <div>{{ user.comments.count }} Комментариев</div>
+        </div>
+        <a href="{% url 'userProfile:profile_edit' %}">Редактировать профиль</a>
+    </div>
+{% endblock %}

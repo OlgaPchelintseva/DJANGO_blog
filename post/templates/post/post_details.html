@@ -25,14 +25,18 @@
                 <p>Вы действительно хотите удалить пост?</p>
                 <form method="post" action="{% url 'post:delete_post' post.id %}">
                     {% csrf_token %}
-                    <button type="submit">Да, удалить</button>
+                    <button type="submit" name="confirm_delete">Да, удалить</button>
                     <a href="{% url 'post:post_detail' post.id %}">Отмена</a>
                 </form>
             </div>
         {% endif %}
     </article>
     <section>
+<<<<<<< HEAD
         <h2>Комментарии ({% comments.count %})</h2>
+=======
+        <h2>Комментарии ({{ comments.count }})</h2>
+>>>>>>> 4e14037589a12440effb762e2f959f02968e76dd
         {% if user.is_authenticated %}
             <h3>Добавить комментарий</h3>
             <form method="post">

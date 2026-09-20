@@ -13,5 +13,8 @@
             {{ form.password }}
         </div>
         <button type="submit">Войти</button>
+        <p>Нет аккаунта? 
+            <a href="{% url 'userAcc:register' %}">Зарегистрироваться</a>
+        </p>
     </form>
 {% endblock %}
