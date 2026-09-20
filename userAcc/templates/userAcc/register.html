@@ -7,8 +7,8 @@
         {% csrf_token %}
         {{ form }}
         <button type="submit" >Зарегистрироваться</button>
-    </form>
-    <p>Уже есть аккаунт? 
+        <p>Уже есть аккаунт? 
         <a href="{% url 'login' %}">Войти</a>
     </p>
+    </form>
 {% endblock %}
