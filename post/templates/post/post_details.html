@@ -15,9 +15,13 @@
         <div>
             {{ post.content }}
         </div>
-        {% if user == post.author %}
-            <a href="{% url 'post:edit_post' post.id %}">Редактировать</a>
-            <a href="{% url 'post:delete_post' post.id %}">Удалить</a>
+        {% if user.is_authenticated %}
+            {% if post.author == user or user.profile.is_moderator %}
+                <a href="{% url 'post:edit_post' post.id %}">Редактировать</a>
+            {% endif %}
+            {% if post.author == user or user.profile.is_moderator %}
+                <a href="{% url 'post:delete_post' post.id %}">Удалить</a>
+            {% endif %}
         {% endif %}
 
         {% if delete_confirm %}
@@ -32,11 +36,7 @@
         {% endif %}
     </article>
     <section>
-<<<<<<< HEAD
-        <h2>Комментарии ({% comments.count %})</h2>
-=======
         <h2>Комментарии ({{ comments.count }})</h2>
->>>>>>> 4e14037589a12440effb762e2f959f02968e76dd
         {% if user.is_authenticated %}
             <h3>Добавить комментарий</h3>
             <form method="post">
@@ -49,6 +49,9 @@
             {% if comments %}
                 {% for comment in comments %}
                     {{ comment.created_at }} {{ comment.author }}
+                    {% if comment.author == user or user.profile.is_moderator or post.author == user %} 
+                        <a href="{% url 'post:delete_comment' comment.id %}">Удалить комментарий</a>
+                    {% endif %}
                     <p>{{ comment.text }}</p>
                 {% endfor %}
             {% endif %}
