@@ -50,7 +50,7 @@
                 {% for comment in comments %}
                     {{ comment.created_at }} {{ comment.author }}
                     {% if comment.author == user or user.profile.is_moderator or post.author == user %} 
-                        <a href="{% url 'post:delete_comment' comment_id %}">Удалить комментарий</a>
+                        <a href="{% url 'post:delete_comment' comment.id %}">Удалить комментарий</a>
                     {% endif %}
                     <p>{{ comment.text }}</p>
                 {% endfor %}

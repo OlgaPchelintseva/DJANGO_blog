@@ -19,8 +19,8 @@
 
         {% if profile.is_blocked %}
             <p>🔒 Заблокирован 
-            {% if profile.blocked_untill %}
-                до {{ profile.blocked_untill|date:"d.m.Y H:i" }}
+            {% if profile.blocked_until %}
+                до {{ profile.blocked_until|date:"d.m.Y H:i" }}
             {% else %}
                 навсегда
             {% endif %}

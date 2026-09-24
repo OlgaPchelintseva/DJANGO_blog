@@ -12,7 +12,7 @@
     </h1>
     <form method="post">
         {% csrf_token %}
-        {% if profile.is_blocked %}
+        {% if not profile.is_blocked %}
             <div>
                 <label for="days">Срок блокировки</label>
                 <select id="days" name="days">

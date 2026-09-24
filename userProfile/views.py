@@ -77,18 +77,18 @@ def toggle_block_user(request, user_id):
             if days and days.isdigit():
                 days_int = int(days)
                 if days_int > 0:
-                    profile.blocked_untill = timezone.now() + timezone.timedelta(days=days_int)
+                    profile.blocked_until = timezone.now() + timezone.timedelta(days=days_int)
                 else:
-                    profile.blocked_untill = None
+                    profile.blocked_until = None
             else:
-                profile.blocked_untill = timezone.now() + timezone.timedelta(days=7)
+                profile.blocked_until = timezone.now() + timezone.timedelta(days=7)
             
             profile.save()
             messages.success(request, 'Пользователь заблокирован')
         
         elif action == 'unblock':
             profile.is_blocked = False
-            profile.blocked_untill = None
+            profile.blocked_until = None
             profile.save()
             messages.success(request, 'Пользователь разблокирован')
         return redirect('userProfile:user_profile_view', user_id=user.id)
